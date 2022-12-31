@@ -57,6 +57,10 @@ module.exports = {
       connection.subscribe(player)
       player.play(resource)
 
+      player.on("idle", () => {
+        connection.destroy()
+      })
+
       return await interaction.reply("Ahí va tu gaa!")
     }
 
