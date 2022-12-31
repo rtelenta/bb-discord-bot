@@ -41,7 +41,7 @@ module.exports = {
     if (interaction.commandName === "bb") {
       const { value: audioId } = interaction.options.get("audio")
       const audiosData = await audios()
-      const audioUrl = audiosData.find(({ id }) => id === audioId).url
+      const audio = audiosData.find(({ id }) => id === audioId)
 
       const connection = joinVoiceChannel({
         channelId: interaction.member.voice.channel.id,
@@ -49,7 +49,7 @@ module.exports = {
         adapterCreator: interaction.guild.voiceAdapterCreator,
       })
 
-      const resource = createAudioResource(audioUrl, {
+      const resource = createAudioResource(audioUrl.url, {
         inlineVolume: true,
       })
 
@@ -61,7 +61,7 @@ module.exports = {
         connection.destroy()
       })
 
-      return await interaction.reply("Ahí va tu gaa!")
+      return await interaction.reply(audio.name)
     }
 
     await interaction.reply("...")
