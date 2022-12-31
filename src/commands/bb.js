@@ -61,9 +61,9 @@ module.exports = {
         connection.destroy()
       })
 
-      const msg = await interaction.reply(audio.name)
+      await interaction.reply(audio.name)
 
-      setTimeout(() => msg.delete(), 5000)
+      setTimeout(() => interaction.deleteReply(), 5000)
 
       return
     }
