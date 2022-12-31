@@ -49,7 +49,7 @@ module.exports = {
         adapterCreator: interaction.guild.voiceAdapterCreator,
       })
 
-      const resource = createAudioResource(audioUrl.url, {
+      const resource = createAudioResource(audio.url, {
         inlineVolume: true,
       })
 
