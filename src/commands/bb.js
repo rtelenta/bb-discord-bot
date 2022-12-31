@@ -61,7 +61,7 @@ module.exports = {
         connection.destroy()
       })
 
-      return await interaction.reply(audio.name)
+      return
     }
 
     await interaction.reply("...")
