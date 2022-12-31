@@ -61,7 +61,7 @@ module.exports = {
         connection.destroy()
       })
 
-      return
+      return interaction.deferUpdate()
     }
 
     await interaction.reply("...")
