@@ -12,7 +12,7 @@ const audios = async () => {
   return data
 }
 
-const addLog = (audio_id) => {
+const addLog = async (audio_id) => {
   supabase.from("usage").insert([{ audio_id }])
 }
 
@@ -66,7 +66,7 @@ module.exports = {
       })
 
       await interaction.reply(audio.name)
-      addLog(audio.id)
+      await addLog(audioId)
 
       setTimeout(() => interaction.deleteReply(), 5000)
 
