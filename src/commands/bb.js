@@ -13,7 +13,7 @@ const audios = async () => {
 }
 
 const addLog = (audio_id) => {
-  supabase.from("usage").insert([audio_id])
+  supabase.from("usage").insert([{ audio_id }])
 }
 
 const data = async () => {
