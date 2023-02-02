@@ -7,13 +7,13 @@ const {
 const supabase = require("../db")
 
 const audios = async () => {
-  const { data } = await supabase.from("audios").select()
+  const { data } = await supabase.from("audios").select().eq("enabled", true)
 
   return data
 }
 
 const addLog = async (audio_id) => {
-  await supabase.from("usage").insert([{ audio_id }]).eq("enabled", true)
+  await supabase.from("usage").insert([{ audio_id }])
 }
 
 const data = async () => {
