@@ -13,7 +13,7 @@ const audios = async () => {
 }
 
 const addLog = async (audio_id) => {
-  await supabase.from("usage").insert([{ audio_id }])
+  await supabase.from("usage").insert([{ audio_id }]).eq("enabled", true)
 }
 
 const data = async () => {
