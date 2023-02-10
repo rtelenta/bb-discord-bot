@@ -24,7 +24,7 @@ const addLog = async (audio_id) => {
 }
 
 const getRanking = async () => {
-  const { data } = await supabase.rpc("get_usage_ranking")
+  const { data } = await supabase.rpc("get_usage_ranking").limit(10)
 
   return data.map(({ audio, bebe, count }) => [count, audio, bebe])
 }
