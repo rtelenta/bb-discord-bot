@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
+const { AsciiTable3 } = require("ascii-table3")
 const {
   joinVoiceChannel,
   createAudioResource,
@@ -6,8 +7,14 @@ const {
 } = require("@discordjs/voice")
 const supabase = require("../db")
 
-const audios = async () => {
+const getAudios = async () => {
   const { data } = await supabase.from("audios").select().eq("enabled", true)
+
+  return data
+}
+
+const getBebes = async () => {
+  const { data } = await supabase.from("bebes").select()
 
   return data
 }
@@ -16,20 +23,48 @@ const addLog = async (audio_id) => {
   await supabase.from("usage").insert([{ audio_id }])
 }
 
+const getRanking = async () => {
+  const { data } = await supabase.rpc("get_usage_ranking")
+
+  return data.map(({ audio, bebe, count }) => [count, audio, bebe])
+}
+
 const data = async () => {
-  const audiosData = await audios()
-  const choices = audiosData.map(({ name, id }) => ({ name, value: id }))
+  const audios = await getAudios()
+  const bebes = await getBebes()
+
+  const bebesWithAudios = bebes
+    .map((bebe) => {
+      return {
+        name: bebe.name,
+        audios: audios
+          .filter((audio) => audio.bebe_id === bebe.id)
+          .map(({ name, id }) => ({ name, value: id })),
+      }
+    })
+    .filter(({ audios }) => !!audios.length)
 
   const command = new SlashCommandBuilder()
     .setName("bb")
     .setDescription("Comandos besorios")
-    .addStringOption((option) =>
-      option
-        .setName("audio")
-        .setDescription("Audios bebesorios")
-        .setRequired(true)
-        .addChoices(...choices)
+    .addSubcommand((subcommand) =>
+      subcommand.setName("rank").setDescription("Contador de audios mas usados")
     )
+
+  for (const bebe of bebesWithAudios) {
+    command.addSubcommand((subcommand) =>
+      subcommand
+        .setName(bebe.name.toLowerCase())
+        .setDescription(`Audios de ${bebe.name}`)
+        .addStringOption((option) =>
+          option
+            .setName("audio")
+            .setDescription("Audios bebesorios")
+            .setRequired(true)
+            .addChoices(...bebe.audios)
+        )
+    )
+  }
 
   return command
 }
@@ -42,9 +77,24 @@ module.exports = {
     if (!interaction.member.voice.channel)
       return await interaction.reply("Conectate a un canal de voz pe")
 
+    if (
+      interaction.commandName === "bb" &&
+      interaction.options?._subcommand === "rank"
+    ) {
+      const ranking = await getRanking()
+      const table = new AsciiTable3("Audios mas usados")
+        .setHeading("Usado", "Audio", "Autor")
+        .addRowMatrix(ranking)
+
+      table.setStyle("compact")
+
+      await interaction.reply(table.toString())
+      return
+    }
+
     if (interaction.commandName === "bb") {
       const { value: audioId } = interaction.options.get("audio")
-      const audiosData = await audios()
+      const audiosData = await getAudios()
       const audio = audiosData.find(({ id }) => id === audioId)
 
       const connection = joinVoiceChannel({

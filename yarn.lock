@@ -205,6 +205,13 @@ are-we-there-yet@^2.0.0:
     delegates "^1.0.0"
     readable-stream "^3.6.0"
 
+ascii-table3@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/ascii-table3/-/ascii-table3-0.8.2.tgz#b5602d49a746eceb1a00bebc9f928721900282db"
+  integrity sha512-L6J5Gcn3hmprVhSY7jVel0cXVo9l37s8UW4UHGoPhWiaOLCcfJ0YBRuO2QpgKnVGulZj8oSVnYZQQA5NWJr6Tg==
+  dependencies:
+    printable-characters "^1.0.42"
+
 balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
@@ -638,6 +645,11 @@ peek-readable@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/peek-readable/-/peek-readable-5.0.0.tgz#7ead2aff25dc40458c60347ea76cfdfd63efdfec"
   integrity sha512-YtCKvLUOvwtMGmrniQPdO7MwPjgkFBtFIrmfSbYmYuq3tKDV/mcfAhBth1+C3ru7uXIZasc/pHnb+YDYNkkj4A==
+
+printable-characters@^1.0.42:
+  version "1.0.42"
+  resolved "https://registry.yarnpkg.com/printable-characters/-/printable-characters-1.0.42.tgz#3f18e977a9bd8eb37fcc4ff5659d7be90868b3d8"
+  integrity sha512-dKp+C4iXWK4vVYZmYSd0KBH5F/h1HoZRsbJ82AVKRO3PEo8L4lBS/vLwhVtpwwuYcoIsVY+1JYKR268yn480uQ==
 
 prism-media@^1.3.4:
   version "1.3.4"
