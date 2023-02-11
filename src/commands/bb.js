@@ -90,7 +90,7 @@ module.exports = {
       const table = new AsciiTable3("Audios mas usados")
         .setHeading("Rank", "Usado", "Audio", "Autor")
         .setAlign(1, AlignmentEnum.CENTER)
-        .setAlign(3, AlignmentEnum.CENTER)
+        .setAlign(4, AlignmentEnum.CENTER)
         .addRowMatrix(ranking)
 
       await interaction.reply("```\n" + table.toString() + "```")
