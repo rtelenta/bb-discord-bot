@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { AsciiTable3 } = require("ascii-table3")
+const { AsciiTable3, AlignmentEnum } = require("ascii-table3")
 const {
   joinVoiceChannel,
   createAudioResource,
@@ -84,11 +84,10 @@ module.exports = {
       const ranking = await getRanking()
       const table = new AsciiTable3("Audios mas usados")
         .setHeading("Usado", "Audio", "Autor")
+        .setAlign(3, AlignmentEnum.CENTER)
         .addRowMatrix(ranking)
 
-      table.setStyle("compact")
-
-      await interaction.reply(table.toString())
+      await interaction.reply("```\n" + table.toString() + "```")
       return
     }
 
