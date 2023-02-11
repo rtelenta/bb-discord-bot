@@ -26,7 +26,12 @@ const addLog = async (audio_id) => {
 const getRanking = async () => {
   const { data } = await supabase.rpc("get_usage_ranking").limit(10)
 
-  return data.map(({ audio, bebe, count }) => [count, audio, bebe])
+  return data.map(({ audio, bebe, count }, index) => [
+    index + 1,
+    count,
+    audio,
+    bebe,
+  ])
 }
 
 const data = async () => {
@@ -83,7 +88,8 @@ module.exports = {
     ) {
       const ranking = await getRanking()
       const table = new AsciiTable3("Audios mas usados")
-        .setHeading("Usado", "Audio", "Autor")
+        .setHeading("Rank", "Usado", "Audio", "Autor")
+        .setAlign(1, AlignmentEnum.CENTER)
         .setAlign(3, AlignmentEnum.CENTER)
         .addRowMatrix(ranking)
 
